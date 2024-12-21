@@ -9,11 +9,8 @@ export class PackingItem {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ default: 1 })
   quantity: number;
-
-  @Column({ default: false })
-  packed: boolean;
 
   @ManyToOne(() => PackingList, (packingList) => packingList.items)
   packingList: PackingList;
