@@ -6,7 +6,7 @@ export class PackingList {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ unique: true })
   name: string;
 
   @OneToMany(() => PackingItem, (item) => item.packingList, { cascade: true })
