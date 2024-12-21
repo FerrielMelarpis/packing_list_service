@@ -1,0 +1,17 @@
+meta {
+  name: updateList
+  type: http
+  seq: 2
+}
+
+put {
+  url: http://localhost:3000/api/v1/packing-lists/d8c99c63-3533-4f42-a536-01b4d4acb855
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "travel2"
+  }
+}
