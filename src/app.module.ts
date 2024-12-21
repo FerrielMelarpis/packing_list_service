@@ -8,7 +8,7 @@ import { PackingListModule } from './packing-list/packing-list.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: 'db/packing-list.sqlite',
+      database: 'packinglist.db',
       entities: [__dirname + '/**/*.entity{.js,.ts}'],
       synchronize: process.env.NODE_ENV == 'dev',
     }),
