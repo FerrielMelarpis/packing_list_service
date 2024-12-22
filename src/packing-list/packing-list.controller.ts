@@ -15,11 +15,21 @@ import { CreatePackingListDto } from './dto/create-packing-list.dto';
 import { UpdatePackingListDto } from './dto/update-packing-list.dto';
 import { CreatePackingItemDto } from './dto/create-packing-item.dto';
 import { UpdatePackingItemDto } from './dto/update-packing-item.dto';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+// @TODO: Add API docs
+@ApiTags('packing-lists')
 @Controller('api/v1/packing-lists')
 export class PackingListController {
   constructor(private readonly packingListService: PackingListService) {}
 
+  @ApiOperation({
+    summary: 'Create a new packing list',
+  })
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    description: 'Item has been successfully created.',
+  })
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() dto: CreatePackingListDto) {
