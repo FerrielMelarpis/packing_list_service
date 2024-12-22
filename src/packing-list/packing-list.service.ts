@@ -18,18 +18,18 @@ export const enum ServiceErrorCode {
   UPDATE_ITEM_FAILED = 'UPDATE_ITEM_FAILED',
   DELETE_ITEM_FAILED = 'DELETE_ITEM_FAILED',
 }
-export type ServiceResponse<T> =
-  | {
-      success: true;
-      data: T;
-    }
-  | {
-      success: false;
-      error: {
-        code: ServiceErrorCode;
-        message: string;
-      };
-    };
+export type SuccessResponse<T> = {
+  success: true;
+  data: T;
+};
+export type ErrorResponse = {
+  success: false;
+  error: {
+    code: ServiceErrorCode;
+    message: string;
+  };
+};
+export type ServiceResponse<T> = SuccessResponse<T> | ErrorResponse;
 
 @Injectable()
 export class PackingListService {
@@ -226,13 +226,13 @@ export class PackingListService {
   ): Promise<ServiceResponse<number>> {
     try {
       const { listId, ...updates } = dto;
+      if (listId) {
+        Object.assign(updates, { packingList: { id: listId } });
+      }
 
       const result = await this.packingItemRepository.update(
         { id: itemId },
-        {
-          packingList: { id: listId },
-          ...updates,
-        },
+        updates,
       );
       if (result.affected === 0) {
         this.logger.error(`Failed to update item. Item ${itemId} not found.`);
